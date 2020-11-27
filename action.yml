@@ -1,0 +1,15 @@
+name: 'Kolga Setup'
+description: 'This action is used to setup Kolga for Github Actions'
+runs:
+  using: 'composite'
+  steps:
+    - name: Construct k8s namespace name
+      run: |
+          echo "repo_name=${github_repo//['_/']/-}" >> $GITHUB_ENV
+          echo "pr_id=${pull_request_id:0:3}" >> $GITHUB_ENV
+          echo "ref=${github_head_ref//['_/']/-}" >> $GITHUB_ENV
+      shell: bash
+      env:
+        github_head_ref: ${{ github.event.pull_request.head.ref }}
+        github_repo: ${{ github.event.repository.name }}
+        pull_request_id: ${{ github.event.pull_request.id }}
