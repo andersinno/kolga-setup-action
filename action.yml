@@ -17,3 +17,7 @@ runs:
     - name: Set K8S_NAMESPACE
       run: echo "K8S_NAMESPACE=${repo_name}-${pr_id}-${ref}" >> $GITHUB_ENV
       shell: bash
+
+    - name: Set ENVIRONMENT_SLUG
+      run: echo "ENVIRONMENT_SLUG=${ref}" >> $GITHUB_ENV
+      shell: bash
