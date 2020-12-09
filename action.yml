@@ -7,17 +7,19 @@ runs:
       run: |
           echo "repo_name=${github_repo//['_/']/-}" >> $GITHUB_ENV
           echo "pr_id=${pull_request_id:0:3}" >> $GITHUB_ENV
-          echo "ref=${github_head_ref//['_/']/-}" >> $GITHUB_ENV
+          echo "github_head_ref=${github_head_ref//['_/']/-}" >> $GITHUB_ENV
+          echo "github_ref=${github_ref##*/}" >> $GITHUB_ENV
       shell: bash
       env:
         github_head_ref: ${{ github.event.pull_request.head.ref }}
+        github_ref: ${{ github.ref }}
         github_repo: ${{ github.event.repository.name }}
         pull_request_id: ${{ github.event.pull_request.id }}
 
     - name: Set K8S_NAMESPACE
-      run: echo "K8S_NAMESPACE=${repo_name}-${pr_id}-${ref}" >> $GITHUB_ENV
+      run: echo "K8S_NAMESPACE=${repo_name}-${pr_id}-${github_head_ref}" >> $GITHUB_ENV
       shell: bash
 
     - name: Set ENVIRONMENT_SLUG
-      run: echo "ENVIRONMENT_SLUG=${ref}" >> $GITHUB_ENV
+      run: echo "ENVIRONMENT_SLUG=${github_head_ref:-$github_ref}" >> $GITHUB_ENV
       shell: bash
