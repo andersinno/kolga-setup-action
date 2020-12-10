@@ -23,3 +23,7 @@ runs:
     - name: Set ENVIRONMENT_SLUG
       run: echo "ENVIRONMENT_SLUG=${github_head_ref:-$github_ref}" >> $GITHUB_ENV
       shell: bash
+
+    - name: Set PROJECT_NAME
+      run: echo "PROJECT_NAME=${repo_name}" >> $GITHUB_ENV
+      shell: bash
