@@ -17,7 +17,9 @@ runs:
         pull_request_id: ${{ github.event.pull_request.id }}
 
     - name: Set K8S_NAMESPACE
-      run: echo "K8S_NAMESPACE=${repo_name}-${pr_id}-${github_head_ref}" >> $GITHUB_ENV
+      run: |
+          namespace_prefix=${repo_name}-${github_head_ref}
+          echo "K8S_NAMESPACE=${namespace_prefix:0:59}-${pr_id}" >> $GITHUB_ENV
       shell: bash
 
     - name: Set ENVIRONMENT_SLUG
