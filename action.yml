@@ -7,7 +7,7 @@ runs:
       run: |
           echo "repo_name=${github_repo//['_/']/-}" >> $GITHUB_ENV
           echo "pr_id=${pull_request_id:0:3}" >> $GITHUB_ENV
-          echo "github_head_ref=${github_head_ref//['_/']/-}" >> $GITHUB_ENV
+          echo "github_head_ref=${github_head_ref//['_/.']/-}" >> $GITHUB_ENV
           echo "github_ref=${github_ref##*/}" >> $GITHUB_ENV
       shell: bash
       env:
