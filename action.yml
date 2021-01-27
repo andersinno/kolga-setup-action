@@ -34,3 +34,8 @@ runs:
     - name: Set PROJECT_NAME
       run: echo "PROJECT_NAME=${repo_name,,}" >> $GITHUB_ENV
       shell: bash
+
+    - name: Set K8S_ADDITIONAL_HOSTNAMES
+      run: |
+        echo "K8S_ADDITIONAL_HOSTNAMES=${{ secret.K8S_ADDITIONAL_HOSTNAMES }}" >> $GITHUB_ENV
+      shell: bash
