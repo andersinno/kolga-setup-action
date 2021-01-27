@@ -39,3 +39,5 @@ runs:
       run: |
         echo "K8S_ADDITIONAL_HOSTNAMES=$K8S_ADDITIONAL_HOSTNAMES" >> $GITHUB_ENV
       shell: bash
+      env:
+        K8S_ADDITIONAL_HOSTNAMES: ${{ secrets.K8S_ADDITIONAL_HOSTNAMES }}
