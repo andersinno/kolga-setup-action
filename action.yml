@@ -8,12 +8,9 @@ runs:
           echo "repo_name=${github_repo//['_/']/-}" >> $GITHUB_ENV
           echo "pr_id=${pull_request_id:0:3}" >> $GITHUB_ENV
           echo "github_head_ref=${github_head_ref//['_/.']/-}" >> $GITHUB_ENV
-          github_ref_tmp=${github_ref##*/}
-          echo "github_ref=${github_ref_tmp//['_/.']/-}" >> $GITHUB_ENV
       shell: bash
       env:
         github_head_ref: ${{ github.event.pull_request.head.ref }}
-        github_ref: ${{ github.ref }}
         github_repo: ${{ github.event.repository.name }}
         pull_request_id: ${{ github.event.pull_request.id }}
 
@@ -27,7 +24,7 @@ runs:
 
     - name: Set ENVIRONMENT_SLUG
       run: |
-          environment_slug=${github_head_ref:-$github_ref}
+          environment_slug=${github_head_ref:-"project"}
           echo "ENVIRONMENT_SLUG=${environment_slug,,}" >> $GITHUB_ENV
       shell: bash
 
