@@ -1,18 +1,30 @@
 name: 'Kolga Setup'
 description: 'This action is used to setup Kolga for Github Actions'
+inputs:
+  head_ref:
+    description: "Branch to use as base of names"
+    default: ""
+    
+  pr_number:
+    description: "Pull request ID to use in names"
+    default: ""
+    
+
 runs:
   using: 'composite'
   steps:
     - name: Parse Variables
       run: |
+          github_head_ref=${input_head_ref:-${{ github.event.pull_request.head.ref }}}
+          pull_request_number=${input_pull_request_number:-${{ github.event.pull_request.number }}}
           echo "repo_name=${github_repo//['_/']/-}" >> $GITHUB_ENV
-          echo "pr_id=${pull_request_id:0:3}" >> $GITHUB_ENV
+          echo "pr_id=${pull_request_number:0:3}" >> $GITHUB_ENV
           echo "github_head_ref=${github_head_ref//['_/.']/-}" >> $GITHUB_ENV
       shell: bash
       env:
-        github_head_ref: ${{ github.event.pull_request.head.ref }}
+        input_head_ref: ${{ inputs.head_ref }}
         github_repo: ${{ github.event.repository.name }}
-        pull_request_id: ${{ github.event.pull_request.id }}
+        input_pull_request_number: ${{ inputs.pr_number }}
 
     - name: Set K8S_NAMESPACE
       run: |
